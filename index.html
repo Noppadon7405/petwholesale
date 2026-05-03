@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetWholesale Thailand - ส่งต่อความสุขให้สัตว์เลี้ยง</title>
+    <style>
+        :root {
+            --primary: #e63946;
+            --secondary: #2a9d8f;
+            --bg: #f8f9fa;
+            --text: #212529;
+            --card: #ffffff;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #f77f8a;
+                --secondary: #48c9b0;
+                --bg: #121212;
+                --text: #e9ecef;
+                --card: #1e1e1e;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/id/1015/1920/600') center/cover;
+            color: white;
+            position: relative;
+        }
+
+        /* Carousel */
+        .hero-carousel {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 700px;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.95);
+            color: var(--text);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .products {
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+        }
+
+        tr:hover {
+            background: rgba(230, 57, 70, 0.08);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c1121f;
+            transform: translateY(-2px);
+        }
+
+        .calculator {
+            background: var(--card);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .result {
+            background: #f0f9f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: 2px solid var(--secondary);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .result {
+                background: #1e3a2f;
+                border-color: var(--secondary);
+            }
+        }
+
+        footer {
+            background: #1e1e1e;
+            color: #ddd;
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid #555;
+        }
+
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🐾 PetWholesale</div>
+            <div class="nav-links">
+                <a href="#">หน้าแรก</a>
+                <a href="#products">สินค้า</a>
+                <a href="#calculator">คำนวณราคา</a>
+                <a href="#">เกี่ยวกับเรา</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <header>
+        <div class="hero-carousel" id="carousel">
+            <div class="carousel-slide active" style="background-image: url('https://picsum.photos/id/1015/1920/600')">
+                <div class="carousel-overlay">
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem;">ส่งต่อความสุขให้สัตว์เลี้ยง</h1>
+                    <p style="font-size: 1.4rem;">ราคาส่งคุณภาพ เริ่มต้นเพียง 1,000 บาท</p>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://picsum.photos/id/201/1920/600')">
+                <div class="carousel-overlay">
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem;">อาหารและของเล่นสัตว์เลี้ยง</h1>
+                    <p style="font-size: 1.4rem;">หลากหลายยี่ห้อ ราคาส่งพิเศษ</p>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('https://picsum.photos/id/866/1920/600')">
+                <div class="carousel-overlay">
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem;">ของใช้สำหรับสุนัขและแมว</h1>
+                    <p style="font-size: 1.4rem;">ส่งทั่วประเทศไทย ฟรีค่าส่งเมื่อสั่งครบ 50,000 บาท</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Calculator -->
+        <section id="calculator">
+            <h2 style="text-align: center; margin-bottom: 2rem;">เครื่องคำนวณราคาส่งแบบเรียลไทม์</h2>
+            <div class="calculator">
+                <div class="form-group">
+                    <label for="product-select">เลือกสินค้า</label>
+                    <select id="product-select">
+                        <option value="">-- เลือกสินค้า --</option>
+                        <option value="0" data-price="89" data-name="ขนมสุนัข ขนาด 500g" data-sku="PD001">ขนมสุนัข ขนาด 500g (89 บาท/ชิ้น)</option>
+                        <option value="1" data-price="450" data-name="อาหารเม็ดสุนัข 10kg" data-sku="PD012">อาหารเม็ดสุนัข 10kg (450 บาท/ถุง)</option>
+                        <option value="2" data-price="320" data-name="ทรายแมว 7L" data-sku="PD045">ทรายแมว 7L (320 บาท/ถุง)</option>
+                        <option value="3" data-price="1250" data-name="คอกสุนัขพับได้" data-sku="PD078">คอกสุนัขพับได้ (1,250 บาท/ชิ้น)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">จำนวน</label>
+                    <input type="number" id="quantity" min="1" value="10" placeholder="ระบุจำนวน">
+                </div>
+                <button class="btn btn-primary" onclick="calculatePrice()" style="width: 100%; padding: 14px;">คำนวณราคา</button>
+                
+                <div id="calc-result" class="result" style="display: none;">
+                    ราคารวม: <span id="total-price">0</span> บาท<br>
+                    <small id="tier-info" style="font-weight: normal;"></small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products -->
+        <section id="products">
+            <h2>สินค้ายอดนิยม</h2>
+            <div class="products">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>สินค้า</th>
+                            <th>ราคาต่อหน่วย (บาท)</th>
+                            <th>จำนวนขั้นต่ำ</th>
+                            <th>การกระทำ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PD001</td>
+                            <td>ขนมสุนัข ขนาด 500g</td>
+                            <td>89</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" onclick="interested('PD001', 'ขนมสุนัข ขนาด 500g')">สนใจ</button></td>
+                        </tr>
+                        <tr>
+                            <td>PD012</td>
+                            <td>อาหารเม็ดสุนัข 10kg</td>
+                            <td>450</td>
+                            <td>5</td>
+                            <td><button class="btn btn-primary" onclick="interested('PD012', 'อาหารเม็ดสุนัข 10kg')">สนใจ</button></td>
+                        </tr>
+                        <tr>
+                            <td>PD045</td>
+                            <td>ทรายแมว 7L</td>
+                            <td>320</td>
+                            <td>10</td>
+                            <td><button class="btn btn-primary" onclick="interested('PD045', 'ทรายแมว 7L')">สนใจ</button></td>
+                        </tr>
+                        <tr>
+                            <td>PD078</td>
+                            <td>คอกสุนัขพับได้</td>
+                            <td>1250</td>
+                            <td>2</td>
+                            <td><button class="btn btn-primary" onclick="interested('PD078', 'คอกสุนัขพับได้')">สนใจ</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>PetWholesale Thailand</h3>
+                    <p>ผู้จัดจำหน่ายสินค้าสัตว์เลี้ยงราคาส่ง<br>
+                    โทร: 02-xxx-xxxx | Line Official: @petwholesale</p>
+                </div>
+                
+                <div>
+                    <h3>ติดต่อสอบถาม</h3>
+                    <form id="contact-form">
+                        <input type="text" id="name" class="form-control" placeholder="ชื่อ-นามสกุล" required>
+                        <input type="tel" id="phone" class="form-control" placeholder="เบอร์โทรศัพท์" required>
+                        <input type="text" id="lineid" class="form-control" placeholder="Line ID" required>
+                        <textarea id="message" class="form-control" rows="3" placeholder="ข้อความเพิ่มเติม (ถ้ามี)"></textarea>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">ส่งข้อความ</button>
+                    </form>
+                </div>
+                
+                <div>
+                    <h3>นโยบายราคาส่ง</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>• 1,000 - 15,000 บาท : ราคาปกติ</li>
+                        <li>• 15,001 - 49,999 บาท : ส่วนลด 8%</li>
+                        <li>• 50,000+ บาท : ส่วนลด 15% + ฟรีค่าส่ง</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 3rem; opacity: 0.7;">© 2026 PetWholesale Thailand. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Alert -->
+    <div id="alert-box" class="alert"></div>
+
+    <script>
+        // Carousel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        setInterval(nextSlide, 5000);
+        
+        // Price Calculator
+        function calculatePrice() {
+            const select = document.getElementById('product-select');
+            const qty = parseInt(document.getElementById('quantity').value) || 0;
+            
+            if (!select.value || qty <= 0) {
+                alert('กรุณาเลือกสินค้าและระบุจำนวน');
+                return;
+            }
+            
+            const pricePerUnit = parseFloat(select.options[select.selectedIndex].dataset.price);
+            let subtotal = pricePerUnit * qty;
+            
+            let discount = 0;
+            let tierText = '';
+            
+            if (subtotal >= 50000) {
+                discount = 0.15;
+                tierText = 'ระดับ VIP (50,000+ บาท) ส่วนลด 15% + ฟรีค่าส่ง';
+            } else if (subtotal >= 15001) {
+                discount = 0.08;
+                tierText = 'ระดับ Silver (15,001-49,999 บาท) ส่วนลด 8%';
+            } else {
+                tierText = 'ระดับปกติ (1,000-15,000 บาท)';
+            }
+            
+            const finalPrice = Math.round(subtotal * (1 - discount));
+            
+            document.getElementById('total-price').textContent = finalPrice.toLocaleString('th-TH');
+            document.getElementById('tier-info').textContent = tierText;
+            document.getElementById('calc-result').style.display = 'block';
+        }
+        
+        // Interested Button -> Line
+        function interested(sku, name) {
+            const message = `สนใจสินค้า\nSKU: ${sku}\nชื่อสินค้า: ${name}\nกรุณาติดต่อกลับด้วยครับ`;
+            const encodedMsg = encodeURIComponent(message);
+            
+            // Open Line with pre-filled message (works best with Line OA or mobile)
+            window.open(`https://line.me/R/share?text=${encodedMsg}`, '_blank');
+            
+            // Alternative: alert for demo
+            // alert(`ข้อความที่จะส่งไป Line:\n${message}`);
+        }
+        
+        // Contact Form
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const lineid = document.getElementById('lineid').value;
+            const message = document.getElementById('message').value || '-';
+            
+            const alertBox = document.getElementById('alert-box');
+            alertBox.innerHTML = `
+                <strong>ส่งข้อมูลเรียบร้อย!</strong><br>
+                ชื่อ: ${name}<br>
+                เบอร์: ${phone}<br>
+                Line ID: ${lineid}<br>
+                ข้อความ: ${message}
+            `;
+            alertBox.style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            
+            // Auto hide alert
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 8000);
+        });
+        
+        // Keyboard support for calculator
+        document.getElementById('quantity').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculatePrice();
+            }
+        });
+        
+        // Initial carousel
+        showSlide(0);
+    </script>
+</body>
+</html>
